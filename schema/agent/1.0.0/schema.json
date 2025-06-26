@@ -211,7 +211,7 @@
                       "type": "array",
                       "description": "List of vector store identifiers",
                       "items": { "type": "string" },
-                      "minItems": 1,
+                      "minItems": 0,
                       "maxItems": 1
                     }
                   },
