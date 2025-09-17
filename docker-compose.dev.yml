@@ -1,0 +1,99 @@
+version: '3.8'
+
+services:
+  # Node.js Backend - Development mode with hot reload
+  backend-node:
+    build:
+      context: ./backend-node
+      dockerfile: Dockerfile.dev
+    ports:
+      - "3001:3001"
+      - "9229:9229"  # Node.js debugger port
+    environment:
+      - NODE_ENV=development
+      - PORT=3001
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - GITHUB_WEBHOOK_SECRET=${GITHUB_WEBHOOK_SECRET}
+      - AZURE_AI_FOUNDRY_ENDPOINT=${AZURE_AI_FOUNDRY_ENDPOINT}
+      - AZURE_AI_STUDIO_ENDPOINT=${AZURE_AI_STUDIO_ENDPOINT}
+      - AZURE_OPENAI_API_KEY=${AZURE_OPENAI_API_KEY}
+      - AZURE_REGION=${AZURE_REGION}
+      - FRONTEND_URL=http://localhost:5173
+    volumes:
+      - ./backend-node:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - ai-foundry-network
+    command: npm run dev
+
+  # Python Backend - Development mode with hot reload
+  backend-python:
+    build:
+      context: ./backend-python
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:8000"
+    environment:
+      - ENVIRONMENT=development
+      - PORT=8000
+      - GITHUB_TOKEN=${GITHUB_TOKEN}
+      - AZURE_AI_FOUNDRY_ENDPOINT=${AZURE_AI_FOUNDRY_ENDPOINT}
+      - AZURE_AI_STUDIO_ENDPOINT=${AZURE_AI_STUDIO_ENDPOINT}
+      - AZURE_OPENAI_API_KEY=${AZURE_OPENAI_API_KEY}
+      - AZURE_REGION=${AZURE_REGION}
+      - FRONTEND_URL=http://localhost:5173
+      - ALLOWED_HOSTS=localhost,127.0.0.1
+    volumes:
+      - ./backend-python:/usr/src/app
+    networks:
+      - ai-foundry-network
+    command: uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+
+  # React Frontend - Development mode with Vite
+  frontend-react:
+    build:
+      context: ./frontend-react
+      dockerfile: Dockerfile.dev
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_NODE_API_URL=http://localhost:3001
+      - VITE_PYTHON_API_URL=http://localhost:8000
+      - VITE_NODE_WS_URL=http://localhost:3001
+      - VITE_APP_NAME=AI Foundry Dashboard (Dev)
+      - VITE_APP_VERSION=1.0.0-dev
+    volumes:
+      - ./frontend-react:/usr/src/app
+      - /usr/src/app/node_modules
+    networks:
+      - ai-foundry-network
+    command: npm run dev
+
+  # Redis for development
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - ai-foundry-network
+
+  # PostgreSQL for development
+  postgres:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=ai_foundry_dev
+      - POSTGRES_USER=ai_foundry
+      - POSTGRES_PASSWORD=ai_foundry_password
+    volumes:
+      - postgres_dev_data:/var/lib/postgresql/data
+    networks:
+      - ai-foundry-network
+
+networks:
+  ai-foundry-network:
+    driver: bridge
+
+volumes:
+  postgres_dev_data:
