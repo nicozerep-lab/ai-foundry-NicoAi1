@@ -1,0 +1,55 @@
+{
+  "name": "ai-foundry-saas",
+  "version": "1.0.0",
+  "description": "Production-ready AI SaaS web application with authentication, billing, and pluggable AI model integrations",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "db:push": "prisma db push",
+    "db:migrate": "prisma migrate dev",
+    "db:studio": "prisma studio",
+    "db:generate": "prisma generate"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.9.0",
+    "@huggingface/inference": "^2.8.0",
+    "@next-auth/prisma-adapter": "^1.0.7",
+    "@octokit/rest": "^21.0.2",
+    "@prisma/client": "^6.16.2",
+    "@tailwindcss/forms": "^0.5.7",
+    "@tailwindcss/typography": "^0.5.15",
+    "autoprefixer": "^10.4.20",
+    "bcryptjs": "^2.4.3",
+    "jose": "^5.6.3",
+    "lucide-react": "^0.438.0",
+    "next": "14.2.7",
+    "next-auth": "^4.24.7",
+    "nodemailer": "^6.9.14",
+    "openai": "^4.56.0",
+    "postcss": "^8.4.41",
+    "prisma": "^6.16.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-hook-form": "^7.52.2",
+    "stripe": "^16.8.0",
+    "tailwindcss": "^3.4.10",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^22.5.0",
+    "@types/nodemailer": "^6.4.15",
+    "@types/react": "^18.3.4",
+    "@types/react-dom": "^18.3.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.7",
+    "typescript": "^5.5.4"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "license": "MIT"
+}
