@@ -1,0 +1,21 @@
+# Global code owners
+* @nicozerep-lab
+
+# Backend services
+/backend-node/ @nicozerep-lab
+/backend-python/ @nicozerep-lab
+
+# Frontend applications  
+/frontend-react/ @nicozerep-lab
+/frontend-angular/ @nicozerep-lab
+
+# Infrastructure and deployment
+/docker/ @nicozerep-lab
+/.github/ @nicozerep-lab
+/docker-compose*.yml @nicozerep-lab
+/Dockerfile* @nicozerep-lab
+
+# Security and configuration
+/.github/workflows/ @nicozerep-lab
+/.github/dependabot.yml @nicozerep-lab
+/scripts/ @nicozerep-lab

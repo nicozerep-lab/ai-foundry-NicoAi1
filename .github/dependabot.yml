@@ -1,0 +1,94 @@
+version: 2
+updates:
+  # GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "nicozerep-lab"
+    labels:
+      - "dependencies"
+      - "github-actions"
+
+  # Node.js backend
+  - package-ecosystem: "npm"
+    directory: "/backend-node"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:00"
+    open-pull-requests-limit: 5
+    versioning-strategy: increase-if-necessary
+    reviewers:
+      - "nicozerep-lab"
+    labels:
+      - "dependencies"
+      - "backend"
+      - "nodejs"
+    ignore:
+      # Ignore major version updates to avoid breaking changes
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # React frontend
+  - package-ecosystem: "npm"
+    directory: "/frontend-react"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:00"
+    open-pull-requests-limit: 5
+    versioning-strategy: increase-if-necessary
+    reviewers:
+      - "nicozerep-lab"
+    labels:
+      - "dependencies"
+      - "frontend"
+      - "react"
+    ignore:
+      # Ignore major version updates to avoid breaking changes
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # Angular frontend (when created)
+  - package-ecosystem: "npm"
+    directory: "/frontend-angular"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:00"
+    open-pull-requests-limit: 5
+    versioning-strategy: increase-if-necessary
+    reviewers:
+      - "nicozerep-lab"
+    labels:
+      - "dependencies"
+      - "frontend"
+      - "angular"
+    ignore:
+      # Ignore major version updates to avoid breaking changes
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+
+  # Python backend
+  - package-ecosystem: "pip"
+    directory: "/backend-python"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "08:00"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "nicozerep-lab"
+    labels:
+      - "dependencies"
+      - "backend"
+      - "python"
+    ignore:
+      # Ignore major version updates to avoid breaking changes
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]

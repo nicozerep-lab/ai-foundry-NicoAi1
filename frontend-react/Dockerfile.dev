@@ -1,0 +1,22 @@
+FROM node:18-alpine
+
+WORKDIR /usr/src/app
+
+# Copy package files
+COPY package*.json ./
+
+# Install dependencies
+RUN npm install
+
+# Copy source code
+COPY . .
+
+# Create non-root user
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nodejs -u 1001
+RUN chown -R nodejs:nodejs /usr/src/app
+USER nodejs
+
+EXPOSE 5173
+
+CMD ["npm", "run", "dev", "--", "--host"]
