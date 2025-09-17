@@ -1,12 +1,12 @@
 import NextAuth from 'next-auth'
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
+// import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import GoogleProvider from 'next-auth/providers/google'
 import FacebookProvider from 'next-auth/providers/facebook'
 import EmailProvider from 'next-auth/providers/email'
-import { prisma } from './prisma'
+// import { prisma } from './prisma'
 
 export const authOptions = {
-  adapter: PrismaAdapter(prisma),
+  // adapter: PrismaAdapter(prisma), // Uncomment when database is ready
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
@@ -26,7 +26,7 @@ export const authOptions = {
       ...session,
       user: {
         ...session.user,
-        id: user.id,
+        id: user?.id || session.user.email,
       },
     }),
   },

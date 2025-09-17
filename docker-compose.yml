@@ -1,0 +1,75 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: ai-foundry-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ai_foundry
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # AI Foundry Application
+  ai-foundry:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-foundry-app
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      # Database
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/ai_foundry
+      
+      # App Configuration
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_SECRET: your-secret-key-change-in-production
+      
+      # Add your environment variables here
+      # GOOGLE_CLIENT_ID: your-google-client-id
+      # GOOGLE_CLIENT_SECRET: your-google-client-secret
+      # FACEBOOK_CLIENT_ID: your-facebook-client-id
+      # FACEBOOK_CLIENT_SECRET: your-facebook-client-secret
+      # EMAIL_SERVER: smtp://username:password@smtp.example.com:587
+      # EMAIL_FROM: noreply@yourapp.com
+      # STRIPE_SECRET_KEY: sk_test_your-stripe-secret-key
+      # STRIPE_WEBHOOK_SECRET: whsec_your-webhook-secret
+      # OPENAI_API_KEY: sk-your-openai-api-key
+      # AZURE_OPENAI_ENDPOINT: https://your-resource.openai.azure.com/
+      # AZURE_OPENAI_API_KEY: your-azure-openai-key
+      # AZURE_OPENAI_DEPLOYMENT: your-deployment-name
+      # HUGGINGFACE_API_KEY: hf_your-huggingface-token
+      # GITHUB_TOKEN: ghp_your-github-token
+      # GITHUB_WEBHOOK_SECRET: your-github-webhook-secret
+      
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./.env.local:/app/.env.local:ro
+
+  # Redis (Optional - for caching and rate limiting)
+  redis:
+    image: redis:7-alpine
+    container_name: ai-foundry-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+volumes:
+  postgres_data:
+  redis_data:

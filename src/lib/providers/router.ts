@@ -47,7 +47,7 @@ export class ModelRouter {
   async listAllModels(): Promise<Record<string, string[]>> {
     const models: Record<string, string[]> = {}
     
-    for (const [name, provider] of this.providers) {
+    for (const [name, provider] of Array.from(this.providers.entries())) {
       try {
         models[name] = await provider.listModels()
       } catch (error) {

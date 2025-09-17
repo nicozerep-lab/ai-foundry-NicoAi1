@@ -1,0 +1,35 @@
+{
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "outputDirectory": ".next",
+  "env": {
+    "NEXTAUTH_URL": "@nextauth_url",
+    "NEXTAUTH_SECRET": "@nextauth_secret",
+    "DATABASE_URL": "@database_url",
+    "GOOGLE_CLIENT_ID": "@google_client_id",
+    "GOOGLE_CLIENT_SECRET": "@google_client_secret",
+    "FACEBOOK_CLIENT_ID": "@facebook_client_id",
+    "FACEBOOK_CLIENT_SECRET": "@facebook_client_secret",
+    "EMAIL_SERVER": "@email_server",
+    "EMAIL_FROM": "@email_from",
+    "STRIPE_SECRET_KEY": "@stripe_secret_key",
+    "STRIPE_WEBHOOK_SECRET": "@stripe_webhook_secret",
+    "STRIPE_PRICE_MONTHLY": "@stripe_price_monthly",
+    "STRIPE_PRICE_YEARLY": "@stripe_price_yearly",
+    "NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY": "@stripe_publishable_key",
+    "OPENAI_API_KEY": "@openai_api_key",
+    "OPENAI_BASE_URL": "@openai_base_url",
+    "AZURE_OPENAI_ENDPOINT": "@azure_openai_endpoint",
+    "AZURE_OPENAI_API_KEY": "@azure_openai_api_key",
+    "AZURE_OPENAI_DEPLOYMENT": "@azure_openai_deployment",
+    "HUGGINGFACE_API_KEY": "@huggingface_api_key",
+    "GITHUB_TOKEN": "@github_token",
+    "GITHUB_WEBHOOK_SECRET": "@github_webhook_secret"
+  },
+  "functions": {
+    "app/api/**/*.ts": {
+      "maxDuration": 30
+    }
+  }
+}
